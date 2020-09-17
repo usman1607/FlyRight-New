@@ -31,6 +31,7 @@ public class AircraftController {
 
         Aircraft aircraft = new Aircraft(registrationNumber, name, type, capacity);
         aircraftRepository.save(aircraft);
+        //model.addAttribute("message", "The Aircraft was created successfully...");
         return "redirect:/aircrafts/list";
     }
 

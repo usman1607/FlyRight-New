@@ -68,45 +68,40 @@
 
                     </div>
                 </div>
+                <div class="p-2 add-role" style="border-width: 1px; border-style: solid; color: #0b2e13">
+                    <h4>Create Role</h4>
+                    <form method="post" th:action="${'/roles/add'}">
+                        <div class="form-group">
+                            <label>Role Name</label>
+                            <input type="text" class="form-control mw-100" name="name" required>
+                        </div>
+                        <div >
+                            <button class="btn-outline-success" name="button">Add Role</button>
+                        </div>
+                    </form>
+                </div>
                 <!--                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
 
-                <div class="container align-center">
+                <h2>List of All Roles</h2>
+                <table class="table table-striped table-sm">
+                    <caption class="table-head">LIST OF All ROLES</caption>
+                    <tr>
+                        <th>ID</th>
+                        <th>ROLE NAME</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                    </tr>
+                    <tr th:each="r : *{roles}">
+                        <td th:text="${r.getId()}"></td>
+                        <td th:text="${r.getName()}"></td>
+                        <td><a th:href="@{/roles/edit/{id}(id=${r.getId()})}"><button class="btn-warning" name="button">Edit</button></a></td>
+                        <td><a th:href="@{/roles/delete/{id}(id=${r.getId()})}"><button class="btn-danger" name="button">Delete</button></a></td>
+                    </tr>
+                </table>
 
-                    <div class="row mt-5 mb-5">
-
-                        <div class="col-md-7">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="header-title">Edit Booking Details</h3>
-                                </div>
-
-                                <div class="card-body">
-
-
-                                    <form action="#" th:object="${booking}" th:action="${'/bookings/update'}"  method="post">
-
-                                        <input type="hidden" name="id" th:field="*{id}">
-                                        <div class="form-group">
-                                            <label>Booking Number:</label>
-                                            <input type="text" class="form-control" th:field="*{bookingNumber}" name="bookingNumber" required readonly/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Seat No:</label>
-                                            <input type="number" class="form-control" th:field="*{seatNo}" name="seatNo" required />
-                                        </div>
-
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Edit Booking</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                <p>.</p>
+                <p>.</p>
+                <p>.</p>
                 <p>.</p>
                 <p>.</p>
                 <p>.</p>

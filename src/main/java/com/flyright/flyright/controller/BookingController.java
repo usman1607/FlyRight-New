@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -68,12 +68,12 @@ public class BookingController {
         try {
             boolean succeed = passengerService.addPassenger(passenger);
             if (!succeed) {
-                model.addAttribute("failed", "Passenger age must be above 18 !!!");
+                //model.addAttribute("failed", String.format("Age must be above 18. %s is %d years old.", lastName, age));
                 return "booking/failed";
             }
         }
         catch(AgeLimitException agEx){
-            model.addAttribute("failed", "Passenger age must be above 18 !!!");
+            model.addAttribute("failed", String.format("Passenger age must be above 18 to book a flight. Dear %s %s you are %d years old.", firstName, lastName, age));
             return "booking/failed";
         }
         long millis = System.currentTimeMillis();

@@ -15,9 +15,49 @@
 }
 
 .main-margin-top {
-    margin-top: 100px;
+    margin-top: 90px;
 }
 
+.dashboard-margin-top{
+    margin-top: 80px;
+}
+
+.sign-btn {
+    background-color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 7px;
+    text-decoration-color: blue;
+    box-shadow: #729a45 2px 4px 2px;
+    z-index: 3;
+}
+
+#sign-btn1 {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    position: fixed;
+}
+#sign-btn2 {
+    position: absolute;
+    top: 60px;
+    right: 120px;
+    position: fixed;
+}
+
+.sign-btn:hover {
+    background-color: skyblue;
+    text-decoration: wavy;
+}
+
+.add-role{
+    max-width: 30%;
+}
+
+.admin-nav{
+    height: 100%;
+}
 .flight-summary {
     border: 3px solid purple;
     border-top-right-radius: 12px;

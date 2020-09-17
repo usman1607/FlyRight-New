@@ -3,7 +3,7 @@ package com.flyright.flyright.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class Flight {

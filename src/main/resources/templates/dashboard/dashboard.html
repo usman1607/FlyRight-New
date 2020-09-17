@@ -20,7 +20,6 @@
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/aircrafts/create}">
                                 Create Aircraft
@@ -61,6 +60,7 @@
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
@@ -70,46 +70,20 @@
                 </div>
                 <!--                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
 
-                <div class="container align-center">
+                <h2>You are Welcome.</h2>
 
-                    <div class="row mt-5 mb-5">
-
-                        <div class="col-md-7">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="header-title">Edit Booking Details</h3>
-                                </div>
-
-                                <div class="card-body">
-
-
-                                    <form action="#" th:object="${booking}" th:action="${'/bookings/update'}"  method="post">
-
-                                        <input type="hidden" name="id" th:field="*{id}">
-                                        <div class="form-group">
-                                            <label>Booking Number:</label>
-                                            <input type="text" class="form-control" th:field="*{bookingNumber}" name="bookingNumber" required readonly/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Seat No:</label>
-                                            <input type="number" class="form-control" th:field="*{seatNo}" name="seatNo" required />
-                                        </div>
-
-                                        <button class="btn btn-lg btn-primary btn-block" type="submit">Edit Booking</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
 
                 <p>.</p>
                 <p>.</p>
                 <p>.</p>
+                <p>.</p>
+                <p>.</p>
+                <p>.</p>
+                <p>.</p>
+                <p>.</p>
+                <p>.</p>
+                <p>.</p>
+
 
             </main>
         </div>

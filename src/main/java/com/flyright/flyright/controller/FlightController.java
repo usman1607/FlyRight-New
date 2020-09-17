@@ -4,6 +4,7 @@ import com.flyright.flyright.model.Aircraft;
 import com.flyright.flyright.model.Flight;
 import com.flyright.flyright.repository.AircraftRepository;
 import com.flyright.flyright.repository.FlightRepository;
+import com.flyright.flyright.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -23,6 +24,8 @@ public class FlightController {
     private FlightRepository flightRepository;
     @Autowired
     private AircraftRepository aircraftRepository;
+    @Autowired
+    private LocationRepository locationRepository;
 
     @RequestMapping(value = "/flights/list", method = RequestMethod.GET)
     public String flights(Model model){
@@ -31,31 +34,32 @@ public class FlightController {
     }
 
     @RequestMapping(value = "/flights/availableFlights", method = RequestMethod.GET)
-    public String availableFlights(Model model, @RequestParam String takeOffPoint, @RequestParam String destinationPoint){
-        model.addAttribute("available_flights", flightRepository.findByTakeOffPointAndDestinationPointAndAvailableSeatsGreaterThan(takeOffPoint, destinationPoint, 0));
+    public String availableFlights(Model model, @RequestParam String takeOffPoint, @RequestParam String destinationPoint, @RequestParam String departure) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date departDate = formatter.parse(departure);
+        model.addAttribute("available_flights", flightRepository.searchAvailableFlights(takeOffPoint, destinationPoint, departDate));
         return "flight/availableFlights";
     }
 
     @RequestMapping(value = "/flights/create/{id}", method = RequestMethod.GET)
     public String create(@PathVariable("id") int id,  Model model) {
-
+        model.addAttribute("locations", locationRepository.findAll());
         model.addAttribute("aircraft", aircraftRepository.findById(id).get());
         return "flight/create";
     }
 
     @RequestMapping(value = "/flights/add", method = RequestMethod.POST)
-    public String add(Model model, @RequestParam int id, @RequestParam String flightNumber, @RequestParam String takeOffTime, @RequestParam String landingTime, @RequestParam String takeOffPoint, @RequestParam String destinationPoint, @RequestParam double price, @RequestParam int availableSeats) throws ParseException {
+    public String add(Model model, @RequestParam int id, @RequestParam String flightNumber, @RequestParam String takeOffTime, @RequestParam String landingTime, @RequestParam String takeOffPoint, @RequestParam String destinationPoint, @RequestParam double price) throws ParseException {
 
         Aircraft aircraft = aircraftRepository.findById(id).get();
-
+        int availableSeats = aircraft.getCapacity();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-        java.util.Date utilDate = formatter.parse(takeOffTime);
-        Date takeOff_Time = new Date(utilDate.getTime());
+        //System.out.println(takeOffTime);
+        Date utilDate = formatter.parse(takeOffTime);
 
-        java.util.Date utilDate2 = formatter.parse(landingTime);
-        Date landing_Time = new Date(utilDate2.getTime());
+        Date utilDate2 = formatter.parse(landingTime);
 
-        Flight flight = new Flight(flightNumber, aircraft, takeOff_Time, landing_Time, takeOffPoint, destinationPoint, price, availableSeats);
+        Flight flight = new Flight(flightNumber, aircraft, utilDate, utilDate2, takeOffPoint, destinationPoint, price, availableSeats);
         flightRepository.save(flight);
         return "redirect:/flights/list";
     }
@@ -73,12 +77,10 @@ public class FlightController {
         Flight flight= flightRepository.findById(id).get();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-        java.util.Date utilDate = formatter.parse(takeOffTime);
-        Date takeOff_Time = new Date(utilDate.getTime());
+        Date takeOff_Time = formatter.parse(takeOffTime);
         flight.setTakeOffTime(takeOff_Time);
 
-        java.util.Date utilDate2 = formatter.parse(landingTime);
-        Date landing_Time = new Date(utilDate2.getTime());
+        Date landing_Time = formatter.parse(landingTime);
         flight.setLandingTime(landing_Time);
 
         flight.setAvailableSeats(availableSeats);
